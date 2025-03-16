@@ -28,11 +28,11 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 }
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination){
     vector<int> values;
-    for(;distances[destination] != -1;){
+    for(;distances[destination] != 0;){
         values.push_back(destination);
         destination = previous[destination];
     }
-    // values.push_back(0);
+    values.push_back(0);
     reverse(values.begin(), values.end());
     return values;
 }
