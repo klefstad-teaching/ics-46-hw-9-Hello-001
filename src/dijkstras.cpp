@@ -6,7 +6,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector<bool> visit(vertices, false);
     dist[source] = 0;
     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> heap;
-    heap.push({0,source});
+    heap.push({-1,source});
     while(!heap.empty()){
         int value = heap.top().second;//add the issue right here
         heap.pop();
@@ -28,11 +28,11 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 }
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination){
     vector<int> values;
-    for(;distances[destination] != 0;){
+    for(;destination != -1;){
         values.push_back(destination);
         destination = previous[destination];
     }
-    values.push_back(0);
+    // values.push_back(0);
     reverse(values.begin(), values.end());
     return values;
 }
