@@ -17,9 +17,9 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
             int value_add = edge.dst;
             int weight_value = edge.weight;
             if(!visit[value_add] && dist[value] + weight_value < dist[value_add]){
-                visit[value_add] = dist[value_add] + weight_value;
+                visit[value_add] = value + weight_value;
                 previous[value_add] = value;
-                heap.push({value_add,visit[value_add]});
+                heap.push({value_add,dist[value_add]});
             }
         }
     }
