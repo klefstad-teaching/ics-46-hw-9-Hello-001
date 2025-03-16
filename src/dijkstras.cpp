@@ -6,7 +6,8 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector<bool> visit(vertices, false);
     dist[source] = 0;
     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> heap;
-    heap.push({-1,source});
+    previous.assign(vertices, -1);
+    heap.push({0,source});
     while(!heap.empty()){
         int value = heap.top().second;//add the issue right here
         heap.pop();
