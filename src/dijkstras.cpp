@@ -8,7 +8,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> heap;
     heap.push({source,0});
     while(!heap.empty()){
-        int value = heap.top().first;//add the issue right here
+        int value = heap.top().second;//add the issue right here
         heap.pop();
         if(visit[value]){
             continue;
