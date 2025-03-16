@@ -39,5 +39,7 @@ void print_path(const vector<int>& v, int total){
         for(int i = 0; i < total; ++i){
             cout << v[i] << "";
         }
+    }else{
+        cout << "No word ladder found." << "";
     }
 }
