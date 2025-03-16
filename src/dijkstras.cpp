@@ -5,10 +5,11 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector<int> dist(vertices,INF);
     vector<bool> visit(vertices, false);
     dist[source] = 0;
-    priority_queue<pair<int,int>> heap;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> heap;
     heap.push({source,0});
     while(!heap.empty()){
         int value = heap.top().first;//add the issue right here
+        heap.pop();
         if(visit[value]){
             continue;
         }
@@ -16,10 +17,10 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         for(Edge edge: G[value]){
             int value_add = edge.dst;
             int weight_value = edge.weight;
-            if(!visit[value_add] && dist[value] + weight_value < dist[value_add]){
-                visit[value_add] = value + weight_value;
+            if(!visit[value_add] && dist[value_add] + weight_value < dist[value_add]){
+                visit[value_add] = dist[value_add] + weight_value;
                 previous[value_add] = value;
-                heap.push({value_add,dist[value_add]});
+                heap.push({value_add,visit[value_add]});
             }
         }
     }
