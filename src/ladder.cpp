@@ -7,51 +7,50 @@ void error(string word1, string word2, string msg){
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
     if(abs(int(str1.size() - str2.size())) > d){
         return false;
-    }
-    size_t smallest_value;
-    string smallest_string;
-    string largest_string;
-    if(str1.size() < str2.size()){
-        smallest_value = str1.size();
-        smallest_string = str1;
-        largest_string = str2;
-    }else{
-        smallest_value = str2.size();
-        smallest_string = str2;
-        largest_string = str1;
-    }
-    size_t value_large = 0;
-    size_t values_not_equal = 0;
-    for(size_t i = 0; i < smallest_value;){
-        if(largest_string[value_large] == smallest_string[i]){
-            value_large += 1;
-            i += 1;
-        }else{
-            if(values_not_equal > size_t(d)){
-                return false;
-            }
-            values_not_equal += 1;
-            value_large += 1;
-        }
-    }
-    values_not_equal += (largest_string.size() - value_large);
-    return (values_not_equal <= size_t(d));
-}
-bool is_adjacent(const string& word1, const string& word2){
-    if(abs(int(word1.size() - word2.size())) > 1){
-        return false;
-    }else if(word1.size() == word2.size()){
+    }else if(str1.size() == str2.size()){
         int count = 0;
-        for(size_t i = 0; i < word2.size() ; ++i){
-            if(word1[i] != word2[i]){
+        for(size_t i = 0; i < str2.size() ; ++i){
+            if(str1[i] != str2[i]){
                 count += 1;
                 if(count > 1){
                     return false;
                 }
             }
         }
+        return true;
+    }else{
+        size_t smallest_value;
+        string smallest_string;
+        string largest_string;
+        if(str1.size() < str2.size()){
+            smallest_value = str1.size();
+            smallest_string = str1;
+            largest_string = str2;
+        }else{
+            smallest_value = str2.size();
+            smallest_string = str2;
+            largest_string = str1;
+        }
+        size_t value_large = 0;
+        size_t values_not_equal = 0;
+        for(size_t i = 0; i < smallest_value;){
+            if(largest_string[value_large] == smallest_string[i]){
+                value_large += 1;
+                i += 1;
+            }else{
+                if(values_not_equal > size_t(d)){
+                    return false;
+                }
+                values_not_equal += 1;
+                value_large += 1;
+            }
+        }
+        values_not_equal += (largest_string.size() - value_large);
+        return (values_not_equal <= size_t(d));
     }
-    return true;
+}
+bool is_adjacent(const string& word1, const string& word2){
+    return edit_distance_within(word1,word2,1);
 }
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list){
     queue<vector<string>> ladder;
