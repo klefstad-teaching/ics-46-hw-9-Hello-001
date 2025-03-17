@@ -5,6 +5,9 @@ void error(string word1, string word2, string msg){
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
+    if(abs(int(str1.size() - str2.size())) > d){
+        return false;
+    }
     size_t smallest_value;
     string smallest_string;
     string largest_string;
@@ -17,21 +20,22 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         smallest_string = str2;
         largest_string = str1;
     }
-    int value_large = 0;
-    int values_not_equal = 0;
-    for(size_t i = 0; i < smallest_value; ++i){
+    size_t value_large = 0;
+    size_t values_not_equal = 0;
+    for(size_t i = 0; i < smallest_value;){
         if(largest_string[value_large] == smallest_string[i]){
             value_large += 1;
+            i += 1;
         }else{
-            if(values_not_equal > d){
+            if(values_not_equal > size_t(d)){
                 return false;
             }
             values_not_equal += 1;
             value_large += 1;
-            i -= 1;
         }
     }
-    return true;
+    values_not_equal += (largest_string.size() - value_large);
+    return (values_not_equal <= size_t(d));
 }
 bool is_adjacent(const string& word1, const string& word2){
     if(abs(int(word1.size() - word2.size())) > 1){
